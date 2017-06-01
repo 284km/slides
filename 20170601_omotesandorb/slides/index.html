@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <meta charset="utf-8">
+
+<title>CHANGELOG の更新について考えたこと</title>
+
+<meta name="description" content="">
+<meta name="author" content="284km">
+<meta name="generator" content="reveal-ck 3.6.0">
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<link rel="stylesheet" href="css/reveal-ck.css">
+
+
+<!-- Printing and PDF exports -->
+<script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+<script src="lib/js/html5shiv.js"></script>
+<![endif]-->
+
+  </head>
+
+  <body>
+    <div class="reveal">
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+
+<h2>Ruby 入門の薄い本</h2>
+<h3>を目指して書き始めました (<em>ﾉω・</em>)ﾃﾍ</h3>
+<h3>〜 道半ば 〜</h3>
+<h3>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h3>
+<h5>表参道.rb #23 ~ Ruby/Railsの学び方 ~</h5>
+
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+</section>
+<section>
+
+<h1>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h1>
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+<ul>
+  <li>feedforce エンジニア
+    <ul>
+      <li>Ruby/Rails 中心の生活</li>
+      <li>サービスを作る人</li>
+    </ul>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>みなさん</h1>
+<h1>こんにちは</h1>
+
+</section>
+<section>
+
+<h1>Hello World!</h1>
+
+<pre><code class="language-.rb"># hello.rb
+puts("Hello, World!")
+
+$ ruby hello.rb
+#=&gt; Hello, World
+</code></pre>
+
+</section>
+<section>
+
+<h1>今日 Ruby を覚えたくて来ている方 ✋</h1>
+
+</section>
+<section>
+
+<h1>はじめての Ruby</h1>
+<h1>Yugui さん著</h1>
+
+<p>この本で Ruby に入門しました。<br>
+およそ 200 ページという薄さで必要な内容が纏まっているスゴイ本<br>
+（Ruby 1.8, 1.9 対応）</p>
+
+</section>
+<section>
+
+<h1>Ruby 以前</h1>
+<h1>（私の場合）</h1>
+
+<ul>
+  <li>C</li>
+  <li>Java</li>
+  <li>Perl</li>
+  <li>JavaScript</li>
+  <li>とか</li>
+  <li>COBOL も書いた</li>
+</ul>
+
+</section>
+<section>
+
+<h1>今日話すこと</h1>
+
+<ul>
+  <li>
+    <h3>Ruby の良さそうな学び方（メイン）</h3>
+  </li>
+  <li>
+    <h3>Rails の良さそうな学び方について少し</h3>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>前提</h1>
+
+<ul>
+  <li>
+    <h3><del>初めてプログラミングをする方向け</del></h3>
+  </li>
+  <li>
+    <h3>初めて Ruby について学ぶ方向け</h3>
+  </li>
+  <li>経験則で話します</li>
+</ul>
+
+</section>
+<section>
+
+<h1>経験則</h1>
+
+<ul>
+  <li>自分で実際に書くのが学習効果が高い</li>
+  <li>読んで悩み続けるより、書きはじめると学習速度が上がっていく</li>
+  <li>
+    <h3>なので、必要なことを素早く取り入れて、何か書ける状態に早めに持っていけたら良さそう</h3>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>ではどうするか</h1>
+<h2>順に見ていきます</h2>
+
+</section>
+<section>
+
+<h1>irb</h1>
+<h2>対話的実行環境</h2>
+
+<p>irb を用いると、その場で対話的に Ruby<br>
+プログラムを実行することができます。便利。</p>
+
+<pre><code>$ irb
+irb(main):001:0&gt; 1+1
+=&gt; 2
+</code></pre>
+
+</section>
+<section>
+
+<h1>print デバッグ</h1>
+
+<p>式の値をちょっと見てみたい時に、irb と共に重宝します。</p>
+
+<pre><code>p "foo"  #=&gt; "foo"
+p 123    #=&gt; 123
+p 1 == 1 #=&gt; true
+</code></pre>
+
+</section>
+<section>
+
+<h1>配列</h1>
+
+<p>必要</p>
+
+<pre><code>a = 1
+b = "str"
+c = [a, b, 3, "string"] #=&gt; [1, "str", 3, "string"]
+
+p c[0]    #=&gt; 1
+p c[1]    #=&gt; "str"
+p c[-1]   #=&gt; "string"
+p c[0..1] #=&gt; [1, "str"]
+c[0] = 9  #=&gt; 9
+c[0]      #=&gt; 9
+</code></pre>
+
+</section>
+<section>
+
+<h1>イテレータ</h1>
+
+<p>必要</p>
+
+<pre><code>foo = ["a", "b", "c"]
+foo.each do |item|
+  print item + " "
+end
+#=&gt; a b c 
+
+# 配列の各々の要素についてブロックを評価して、それらの評価値を纏めて新しい配列を構築します
+foo.map{|f| f.upcase} #=&gt; ["A", "B", "C"]
+
+# &amp;: とかググり難い
+foo.map(&amp;:upcase)
+
+# ソート
+bar = [3, 2, 5, 4, 1]
+bar.sort #=&gt; [1, 2, 3, 4, 5]
+</code></pre>
+
+</section>
+<section>
+
+<h1>ハッシュ</h1>
+
+<p>必要</p>
+
+<pre><code>months = { Jan: 1, Feb: 2, Mar: 3 }
+months[:Feb] #=&gt; 2
+</code></pre>
+
+</section>
+<section>
+
+<h1>数値</h1>
+
+<h2>比較 演算子</h2>
+
+<p>必要</p>
+
+<pre><code>1 == 1
+1 ~= 1
+1 &lt; 1
+1 &lt;= 1
+# 宇宙船演算子
+1 &lt;=&gt; 2 #=&gt; -1
+1 &lt;=&gt; 1 #=&gt; 0
+3 &lt;=&gt; 2 #=&gt; 1
+</code></pre>
+
+</section>
+<section>
+
+<h1>文字列</h1>
+
+<h2>式展開</h2>
+
+<ul>
+  <li>二重引用符(““)で括られた文字列内部では式展開が行われます</li>
+  <li>一重引用符(‘’) の場合は行われません</li>
+</ul>
+
+<pre><code>a = 2
+"a = #{a}" #=&gt; "a = 2"
+"a + 2 = #{a + 2}" #=&gt; "a + 2 = 4"
+</code></pre>
+
+</section>
+<section>
+
+<h1>文字列</h1>
+
+<h2>パーセント記法</h2>
+
+<p>検索して調べ辛いと思うシリーズ</p>
+
+<pre><code>%w(foo bar baz)
+#=&gt; ["foo", "bar", "baz"]
+</code></pre>
+
+</section>
+<section>
+
+<h1>文字列</h1>
+
+<h2>ヒアドキュメント</h2>
+
+<p>検索して調べ辛いと思うシリーズ</p>
+
+<pre><code>s = &lt;&lt;"EOS"
+sample
+text
+hello
+EOS
+
+#=&gt; "sample\ntext\nhello\n"
+</code></pre>
+
+</section>
+<section>
+
+<h1>変数</h1>
+
+<p>必要。説明は端折ります。</p>
+
+<ul>
+  <li>ローカル変数</li>
+  <li>インスタンス変数</li>
+  <li>クラス変数</li>
+  <li>グローバル変数</li>
+  <li>組み込み変数 ($$ とか、$ で始まる Perl っぽいの。）</li>
+  <li>定数</li>
+</ul>
+
+</section>
+<section>
+
+<h1>演算子と優先順位</h1>
+
+<ul>
+  <li>
+    <h3>必要な時、不安になった時に確認することになると思う。</h3>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>制御式</h1>
+
+<p>必要</p>
+
+<pre><code>if foo
+  ...
+elsif bar
+  ...
+elsif baz
+  ...
+else
+  ...
+end
+
+unless foo
+  ...
+end
+
+case や while
+</code></pre>
+
+</section>
+<section>
+
+<h1>脱出</h1>
+
+<p>break, next</p>
+
+<pre><code>1.upto(3) do |i|
+  next if i == 2
+  loop do
+    puts "break するよ"
+    break
+  end
+  # break でここに脱出するよ
+  puts i
+end
+</code></pre>
+
+</section>
+<section>
+
+<h1>例外処理</h1>
+
+<p>必要そう</p>
+
+<pre><code>begin
+  do_something # 例外を生じる可能性のある処理
+rescue =&gt; error
+  puts error.message
+end
+</code></pre>
+
+</section>
+<section>
+
+<h1>メソッド</h1>
+
+<p>必要</p>
+
+<pre><code>def sum(x, y)
+  x + y
+end
+
+sum(1, 2) #=&gt; 3
+</code></pre>
+
+</section>
+<section>
+
+<h1>クラス</h1>
+
+<p>必要。クラス名は大文字で始まる。</p>
+
+<pre><code>class Foo
+  def initialize(bar, baz) # 多言語で言うコンストラクタのようなもの
+    @bar = bar # @ ではじまる名前の変数はインスタンス変数
+    @baz = baz
+  end
+  attr_accessor :bar, :baz # 属性への getter, setter を定義する
+end
+
+foo = Foo.new(1, 2) # インスタンス化
+p foo.bar #=&gt; 1
+p foo.baz #=&gt; 2
+</code></pre>
+
+</section>
+<section>
+
+<h1>継承</h1>
+
+<pre><code>class Duration &lt; Range
+  ...
+end
+</code></pre>
+
+</section>
+<section>
+
+<h1>モジュール</h1>
+
+<p>インスタンス化できないクラス のようなもの</p>
+
+<pre><code>module Foo
+  def self.hello
+    puts "hello"
+  end
+end
+Foo.hello #=&gt; hello
+</code></pre>
+
+</section>
+<section>
+
+<h2>インスタンスメソッド</h2>
+<h2>クラスメソッド</h2>
+
+<p>リファレンスマニュアルを読む時には知っておいた方が良い<br>
+(# と . の違い)<br>
+<a href="https://docs.ruby-lang.org/ja/latest/doc/index.html">https://docs.ruby-lang.org/ja/latest/doc/index.html</a></p>
+
+<ul>
+  <li>String#upcase</li>
+  <li>Time.now</li>
+  <li>Kernel.#open</li>
+</ul>
+
+</section>
+<section>
+
+<h1>Railsの学び方</h1>
+
+</section>
+<section>
+
+<h1>RailsTutorial 周回</h1>
+
+<p>おすすめ<br>
+感謝の Rails Tutorial 周回で強くなる。祈る時間が増える。</p>
+
+</section>
+<section>
+
+<h1>Railsの学び方</h1>
+
+<ul>
+  <li>RailsTutorial 周回</li>
+  <li>Ruby on Rails Guides</li>
+  <li>Rails の教科書</li>
+</ul>
+
+</section>
+<section>
+
+<h1>Rails の教科書</h1>
+
+<p>これは私は入門の時期にやった訳ではない。<br>
+比較的最近になってから読んだ。<br>
+rails tutorial が難し過ぎると感じて周りに聞ける人もいない状況などでは、Rails の教科書がとても良さそうに見える。</p>
+
+<ul>
+  <li>プログラミング自体が初めての方を対象としているし、</li>
+  <li>環境構築についても易しく書かれている。</li>
+</ul>
+
+<p>“はじめに” で書かれているとおり、Rails の教科書を読み進めると Rails Guides や Rails Tutorial を読み進める為の基礎知識が身につきます。というのが達成されそう。</p>
+
+</section>
+<section>
+
+<h1>別の視点で大事だと思うこと</h1>
+
+<ul>
+  <li>まわりに聞ける人がいたらより良いと思う。</li>
+  <li>聞ける人を学習前に作れたら便利で効果が高いと思う。</li>
+  <li>もし悩みや困っていることがあれば、この場で聞くととても良いと思います。</li>
+  <li>すごい人が身近にいると、かなりの時間短縮になるというのは私の経験談。</li>
+  <li>カジュアルに発表したり話しかけたりして大丈夫。失敗してもメリットの方が大きいと思っている。</li>
+</ul>
+
+</section>
+
+  </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+  (function() {
+  function extend( a, b ) {
+    for(var i in b) {
+      a[i] = b[i];
+    }
+  }
+  var baseOptions = {
+    transition: 'default',
+
+    dependencies: [
+      { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'plugin/zoom-js/zoom.js', async: true },
+      { src: 'plugin/notes/notes.js', async: true }
+    ]
+  };
+  var configOptions = {"controls":true,"progress":true,"history":true,"center":true}
+  var initializeOptions = {};
+  extend(initializeOptions, baseOptions);
+  extend(initializeOptions, configOptions);
+  Reveal.initialize(initializeOptions);
+})();
+
+</script>
+
+  </body>
+</html>
