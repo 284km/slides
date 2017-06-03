@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <meta charset="utf-8">
+
+<title>ふつうの print debug 集</title>
+
+<meta name="description" content="">
+<meta name="author" content="284km">
+<meta name="generator" content="reveal-ck 3.6.0">
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<link rel="stylesheet" href="css/reveal-ck.css">
+
+
+<!-- Printing and PDF exports -->
+<script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+<script src="lib/js/html5shiv.js"></script>
+<![endif]-->
+
+  </head>
+
+  <body>
+    <div class="reveal">
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+
+<h1>ふつうの print debug 集</h1>
+<h3><a href="https://github.com/284km" class="user-mention">@284km</a></h3>
+<h5>表参道.rb #22 ~ロギング、デバッグ~</h5>
+
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+</section>
+<section>
+
+<h1>self.inspect</h1>
+
+<ul>
+  <li><a href="https://github.com/284km" class="user-mention">@284km</a></li>
+  <li>feedforce
+    <ul>
+      <li>Ruby/Rails 中心の生活</li>
+    </ul>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>本題</h1>
+
+<ul>
+  <li>ロギング</li>
+  <li>デバッグ</li>
+</ul>
+
+</section>
+<section>
+
+<h1>デバッグ</h1>
+
+</section>
+<section>
+
+<h1>デバッグの地味な話をします</h1>
+
+</section>
+<section>
+
+<h1>よく使う</h1>
+
+<ul>
+  <li>binding.pry</li>
+  <li>print debug</li>
+</ul>
+
+</section>
+<section>
+
+<h1>print debug</h1>
+
+<p>手軽に試せる。これで済めばうれしい😇</p>
+
+<p>絶対にコミットしてはいけない。用法に注意。</p>
+
+</section>
+<section>
+
+<h1>print debug</h1>
+
+<pre><code class="language-.rb"># こういうやつ
+puts "#" * 80
+puts foo
+puts "#" * 80
+
+if foo == 1
+  bar = 10
+else
+  bar = 20
+end
+</code></pre>
+
+</section>
+<section>
+
+<h1>何処から呼ばれているか知りたい時</h1>
+<h1>Kernel.#caller</h1>
+
+</section>
+<section>
+
+<h1>Kernel.#caller</h1>
+
+<p>呼び出し元の情報をバックトレース(文字列の配列)として返す</p>
+
+<ul>
+  <li>caller(0) # 現在の場所から</li>
+  <li>caller(1) # 呼び出し元から(default)</li>
+  <li>caller(2) # 呼び出し元の呼び出し元から</li>
+</ul>
+
+<pre><code>def f1
+  f2
+end
+
+def f2
+  f3
+end
+
+def f3
+  p caller(0)  #=&gt; ["1.rb:10:in `f3'", "1.rb:6:in `f2'", "1.rb:2:in `f1'", "1.rb:15:in `&lt;main&gt;'"]
+  p caller     #=&gt; ["1.rb:6:in `f2'", "1.rb:2:in `f1'", "1.rb:15:in `&lt;main&gt;'"]
+  p caller(2)  #=&gt; ["1.rb:2:in `f1'", "1.rb:15:in `&lt;main&gt;'"]
+end
+
+f1
+</code></pre>
+
+</section>
+<section>
+
+<h2>ファイル名, 行数付きで出力したり</h2>
+
+<pre><code>def debug_puts(message)
+  caller()[0] =~ /(.*?):(\d+)/
+  filename, linenum = $1, $2
+  $stderr.puts "[DEBUG] #{filename}:#{linenum}"
+  $stderr.puts "[DEBUG] #{message}"
+end
+
+x = "foo"
+debug_puts "x=#{x.inspect}"
+x = "bar"
+debug_puts "x=#{x.inspect}"
+
+#=&gt; [DEBUG] 2.rb:9
+#=&gt; [DEBUG] x="foo"
+#=&gt; [DEBUG] 2.rb:11
+#=&gt; [DEBUG] x="bar"
+</code></pre>
+
+</section>
+<section>
+
+<h1>Excelption の発生元を知りたいとき</h1>
+
+</section>
+<section>
+
+<h3>Exception の発生元を知りたい時</h3>
+<ul>
+  <li>Exception#backtrace()</li>
+  <li>Exception#set_backtrace</li>
+</ul>
+
+<p>何らか、呼び元が知りたい時に使える…<br>
+(良い例がパッと思いつかなかった<br>
+テストなどがそうです？</p>
+
+<pre><code>class AssertionError &lt; StandardError
+end
+
+def debug_assert(expr)
+  return if expr
+  ex = AssertionError.new("assertion failed")
+  ex.set_backtrace(caller())
+  raise ex  # 本当はここで例外が発生している
+end
+
+def f1
+  debug_assert 1 + 1 == 3 #=&gt; ここで発生したように
+end
+
+f1()
+# =&gt; 8.rb:12:in `f1': assertion failed (AssertionError)
+# =&gt;         from example.rb:15:in `&lt;main&gt;'
+</code></pre>
+
+</section>
+<section>
+
+<h2>メソッドの定義場所を知りたい時</h2>
+<h2>source_location</h2>
+
+<p>pry も便利<br>
+?: 指定したメソッドのドキュメント(コメント)を表示<br>
+$: 指定したメソッドのソースを表示</p>
+
+</section>
+<section>
+
+<h2>メソッドの定義場所を知りたい時</h2>
+<h3>- Kernel#method</h3>
+<h3>- Method#source_location</h3>
+
+<p>Kernel#method と Method#source_location を組み合わせてメソッドの定義場所を見つけられる</p>
+
+<pre><code>$ rails c
+Loading development environment (Rails 5.0.2)
+[1] pry(main)&gt; 'x'.method(:blank?).source_location
+=&gt; ["/Users/furuhashi/src/github.com/feedforce/ecbooster/vendor/bundle/ruby/2.4.0/gems/activesupport-5.0.2/lib/active_support/core_ext/object/blank.rb",
+ 114]
+</code></pre>
+
+</section>
+<section>
+
+<h2>super の場合</h2>
+
+<pre><code>class Super
+  def foo
+    "foo"
+  end
+end
+
+class Sub &lt; Super
+  def foo
+    "foobar"
+  end
+end
+
+x = Sub.new
+
+x.method(:foo).super_method.call #=&gt; "foo"
+x.method(:foo).super_method.source_location
+#=&gt; example.rb
+#=&gt; 2
+</code></pre>
+
+</section>
+<section>
+
+<h2>ObjectSpace.trace_object_allocations_start を使ったやり方</h2>
+
+<p>trace_object_allocations でブロックを囲むか、<br>
+trace_object_allocations_start, trace_object_allocations_stop で処理を囲む。</p>
+
+<pre><code>require 'objspace'
+ObjectSpace.trace_object_allocations_start
+o = Object.new
+ObjectSpace.trace_object_allocations_stop
+puts ObjectSpace.allocation_sourcefile(o) #=&gt; "example.rb"
+puts ObjectSpace.allocation_sourceline(o) #=&gt; 5
+# trace した情報を clear してます
+ObjectSpace.trace_object_allocations_clear
+</code></pre>
+
+</section>
+<section>
+
+<h3>Kernel.#set_trace_func</h3>
+<h3>でフックして調べる</h3>
+
+<ul>
+  <li>Ruby インタプリタのイベントをトレースする</li>
+  <li>Proc オブジェクトとして 指定された proc を登録します</li>
+</ul>
+
+<pre><code>class Foo
+  def foo; bar; end
+  def bar; end
+end
+class Bar &lt; Foo
+  def bar; end
+end
+
+set_trace_func lambda { |event, file, line ,id, binding, klass|
+  if event == 'call' &amp;&amp; id == :bar
+    puts "call method bar file:#{file} line:#{line}"
+  end
+}
+
+Foo.new.foo
+Bar.new.foo
+# =&gt; call method bar file:example.rb line:5
+# =&gt; call method bar file:example.rb line:10
+</code></pre>
+
+</section>
+
+  </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+  (function() {
+  function extend( a, b ) {
+    for(var i in b) {
+      a[i] = b[i];
+    }
+  }
+  var baseOptions = {
+    transition: 'default',
+
+    dependencies: [
+      { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'plugin/zoom-js/zoom.js', async: true },
+      { src: 'plugin/notes/notes.js', async: true }
+    ]
+  };
+  var configOptions = {"controls":true,"progress":true,"history":true,"center":true}
+  var initializeOptions = {};
+  extend(initializeOptions, baseOptions);
+  extend(initializeOptions, configOptions);
+  Reveal.initialize(initializeOptions);
+})();
+
+</script>
+
+  </body>
+</html>
