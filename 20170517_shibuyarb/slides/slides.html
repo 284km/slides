@@ -1,0 +1,136 @@
+<section>
+
+<h1>CHANGELOG の更新について考えたこと</h1>
+<h3>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h3>
+<h5>渋谷.rb[:20170517]</h5>
+
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+</section>
+<section>
+
+<h1>self.inspect</h1>
+
+<ul>
+  <li>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</li>
+  <li>feedforce
+    <ul>
+      <li>Ruby/Rails 中心の生活</li>
+    </ul>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>CHANGELOG</h1>
+
+<ul>
+  <li>
+    <h2>仕事のプロジェクトで、CHANGELOG 書いていますか？</h2>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>何故必要になったか？</h1>
+
+<ul>
+  <li>Product Owner の方がプロジェクトの説明をするのに助かるから</li>
+  <li>主に内部の人間向けの説明などに有用ということだと理解している</li>
+  <li>あまり仕事のプロジェクトで書いている印象が無いんですよね…</li>
+</ul>
+
+</section>
+<section>
+
+<h1>CHANGELOG</h1>
+
+<ul>
+  <li>
+    <h2>仕事のプロジェクトで、CHANGELOG 書いていますか？ ✋</h2>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>CHANGELOG</h1>
+
+<p>大きく 2 パターンの考えがあるのでは？</p>
+
+<ul>
+  <li>
+    <h2>手動派</h2>
+  </li>
+  <li>
+    <h2>自動生成派 (p-r や issue から自動生成)</h2>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>手動</h1>
+
+<ul>
+  <li>
+    <h3>とにかく分かりやすく編集できる(やれるなら一番良いと思う。要約したり、良い感じのリンクを置いたり)</h3>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>Issues, p-r から自動で起こす</h1>
+
+<ul>
+  <li>時間短縮になる</li>
+  <li>必要十分に分かりやすければそれで OK 👍</li>
+  <li>commit log から取るとさすがに粒度が小さすぎる。分かり難い。</li>
+  <li>Issues, p-r を、予め CHANGELOG を生成する前提で書けば良さそう?<br>
+(自分達の場合は、Product Owner が大体 Issue を書くし、p-r も開発者が書くので共有できそう)</li>
+</ul>
+
+</section>
+<section>
+
+<h1>今日やった</h1>
+
+<ul>
+  <li>
+    <h3>skywinder/github-changelog-generator</h3>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h2>skywinder/github-changelog-generator</h2>
+
+<ul>
+  <li>p-r, Issues ごとに良い感じに一覧が作成される</li>
+  <li>Issues などに tag を付けておけば(bug とか) それ毎にまとまる。(以下は README に書いてあります)
+    <ul>
+      <li>Merged pull requests (all merged pull-requests) 🔀</li>
+      <li>Bug fixes (issues labeled bug) 🐞</li>
+      <li>Enhancements (issues labeled enhancement) 🌟</li>
+      <li>Issues (closed issues with no labels) 🚱</li>
+    </ul>
+  </li>
+</ul>
+
+<pre><code class="language-.sh"># Usage
+$ git tag v0.2.0; git push v0.2.0
+$ gem i github_changelog_generator
+$ github_changelog_generator -uuser_name -prepo_name -t github_access_token
+# =&gt; Generated log placed in /path/to/user_name/repo_name/CHANGELOG.md
+### (github_access_token)
+### https://github.com/settings/tokens
+### required "repo" scope
+</code></pre>
+
+</section>
