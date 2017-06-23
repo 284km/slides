@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <meta charset="utf-8">
+
+<title>データフィードの現場で書く Rails アプリケーション</title>
+
+<meta name="description" content="">
+<meta name="author" content="284km">
+<meta name="generator" content="reveal-ck 3.6.0">
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<link rel="stylesheet" href="css/reveal-ck.css">
+
+
+<!-- Printing and PDF exports -->
+<script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+<script src="lib/js/html5shiv.js"></script>
+<![endif]-->
+
+  </head>
+
+  <body>
+    <div class="reveal">
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+
+<h2>データフィードの現場で書く</h2>
+<h2>Rails アプリケーション</h2>
+<h3>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h3>
+<h5>Rails Developers Meetup #2</h5>
+
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+</section>
+<section>
+
+<h1>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h1>
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+<ul>
+  <li>feedforce エンジニア
+    <ul>
+      <li>Ruby/Rails 中心の生活</li>
+      <li>サービスを作る人</li>
+    </ul>
+  </li>
+  <li>Rails Developers Meetup 運営</li>
+</ul>
+
+</section>
+<section>
+
+<h2>データフィードの現場で書く</h2>
+<h2>Rails アプリケーション</h2>
+
+</section>
+<section>
+
+<h1>これから話すこと</h1>
+
+<ul>
+  <li>
+    <h3>データフィードの現場で書く Rails アプリケーションとはなにか？ という話</h3>
+  </li>
+  <li>
+    <h3>WebMock を多用しているのです という話</h3>
+  </li>
+  <li>
+    <h3>VCR が便利です という話</h3>
+  </li>
+  <li>
+    <h3>WebMock の実装はこうなっています という話</h3>
+  </li>
+  <li>
+    <h3>railsdm いっしょにやっていきましょう❤️</h3>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h2>データフィードの現場で書く</h2>
+<h2>Rails アプリケーション</h2>
+
+</section>
+<section>
+
+<h1>データフィードの現場とは？</h1>
+
+</section>
+<section>
+
+<h1>そもそもデータフィードとは？？</h1>
+
+</section>
+<section>
+
+<h1>データフィード</h1>
+
+<ul>
+  <li>
+    <h3>なんとなく知っているよという方 ✋</h3>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h2>データフィードとは</h2>
+
+<h3>保有している商品などのデータを、外部のサービス（広告配信先など） のフォーマットに変換して送信する仕組みのこと</h3>
+
+</section>
+<section>
+
+<h2>データフィードの現場で書く</h2>
+<h2>Rails アプリケーション</h2>
+<h3>結局それは</h3>
+
+</section>
+<section>
+
+<h2>特殊なことはない。</h2>
+<h2>ふつうでありたいと日夜励む</h2>
+<h2>Rails アプリケーションでした</h2>
+
+<ul>
+  <li>共通認識、規約、Rails way</li>
+  <li>特殊だな？と感じたら一度疑ってみた方が良い</li>
+  <li>これについてはは onk さんの発表資料が最高</li>
+</ul>
+
+</section>
+<section>
+
+<h2>そうは言っても特徴はあります</h2>
+
+<p>外部 API を利用するので、こういった gem を多用することになる</p>
+
+<ul>
+  <li>
+    <h3>arsduo/koala</h3>
+    <p>Koala is a Facebook library for Ruby</p>
+  </li>
+  <li>
+    <h3>google/google-api-ruby-client</h3>
+    <p>The Google API Client Library for Ruby</p>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h2>そのような特徴のテストをそれなりの量書くことになります</h2>
+
+</section>
+<section>
+
+<h2>そのような特徴のテスト</h2>
+
+<ul>
+  <li>
+    <h3>HTTPリクエストが発生する部分のテスト</h3>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h2>そのような特徴のテスト</h2>
+
+<ul>
+  <li>
+    <h3>WebMock を使う</h3>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h1>WebMock</h1>
+
+<p>Library for stubbing and setting expectations<br>
+on HTTP requests in Ruby.</p>
+
+<p>HTTP リクエストをあたかも処理されたように<br>
+レスポンスを返すことができる。</p>
+
+</section>
+<section>
+
+<h1>Installation</h1>
+
+<p>テストの用途で使う話をします</p>
+
+<pre><code class="language-.rb">gem install webmock
+
+# RSpec
+require 'webmock/rspec'
+
+# MiniTest
+require 'webmock/minitest'
+</code></pre>
+
+</section>
+<section>
+
+<h1>基本的な使い方</h1>
+
+<pre><code class="language-.rb"># （stubするリクエストの登録）
+# https://www.example.com/ に POST メソッドでアクセスした場合に、
+# メッセージボディが "abc" であるレスポンスを返す
+# method_name に :any を指定すると何でも可となる
+
+stub_request(:post, "https://www.example.com").
+  with(body: "abc", headers: { 'Content-Length' =&gt; 3 }).
+  to_return(body: "abc")
+</code></pre>
+
+<p>こういうテストコードをたくさん書きます。<br>
+WebMock 用のデータ作成が大変。面倒。</p>
+
+</section>
+<section>
+
+<h2>データ作成を楽にしたい</h2>
+<h2>VCR</h2>
+
+<p>Record your test suite’s HTTP interactions and replay them during future test runs for fast, deterministic, accurate tests.</p>
+
+<p>データを実際のHTTP通信から記録するライブラリ</p>
+
+<pre><code class="language-.rb">gem 'vcr'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'tmp/vcr'
+  c.hook_into :webmock
+end
+
+# tmp/vcr/path/to/response.yml に作られる
+VCR.use_cassette("path/to/response") do
+  response = Net::HTTP.get_response(URI('http://example.com'))
+end
+</code></pre>
+
+</section>
+<section>
+
+<h1>WebMock</h1>
+<h2>ここで何が起きているのか</h2>
+
+<pre><code class="language-.rb">stub_request(:post, "https://www.example.com").
+  with(body: "abc", headers: { 'Content-Length' =&gt; 3 }).
+  to_return(body: "abc")
+</code></pre>
+
+<p><a href="https://www.example.com/">https://www.example.com/</a> に POST メソッドでアクセスした場合に、メッセージボディが “abc” であるレスポンスを返す</p>
+
+</section>
+<section>
+
+<h1>WebMock の</h1>
+<h1>コードを紹介</h1>
+
+<p>ここで何が起きているのかコードを簡単に追います</p>
+
+<pre><code class="language-.rb">stub_request(:post, "https://www.example.com").
+  with(body: "abc", headers: { 'Content-Length' =&gt; 3 }).
+  to_return(body: "abc")
+</code></pre>
+
+</section>
+<section>
+
+<p>エントリーポイント</p>
+
+<p>webmock/lib/webmock/api.rb</p>
+
+<pre><code class="language-.rb">module WebMock
+  module API
+    extend self
+
+    def stub_request(method, uri)
+      WebMock::StubRegistry.instance.
+        register_request_stub(WebMock::RequestStub.new(method, uri))
+    end
+
+    alias_method :stub_http_request, :stub_request
+</code></pre>
+
+<ul>
+  <li>WebMock::StubRegistry.instance.register_request_stub で、RequestStub を保持する</li>
+  <li>保持されるのは WebMock::RequestStub.new(method, uri)</li>
+</ul>
+
+</section>
+<section>
+
+<pre><code class="language-.rb">stub_request(:post, "https://www.example.com").
+  with(body: "abc", headers: { 'Content-Length' =&gt; 3 }).
+  to_return(body: "abc")
+</code></pre>
+
+<ul>
+  <li>RequestPattern を保持する</li>
+  <li>#with, #to_return メソッドがある</li>
+</ul>
+
+<pre><code class="language-.rb">module WebMock
+  class RequestStub
+    def initialize(method, uri)
+      @request_pattern = RequestPattern.new(method, uri)
+      @responses_sequences = []
+      self
+    end
+
+    def with(params = {}, &amp;block)
+    def to_return(*response_hashes, &amp;block)
+</code></pre>
+
+</section>
+<section>
+
+<pre><code class="language-.rb">module WebMock
+  class RequestPattern
+    def initialize(method, uri, options = {})
+      @method_pattern  = MethodPattern.new(method)
+      @uri_pattern     = create_uri_pattern(uri)
+      @body_pattern    = nil
+      @headers_pattern = nil
+      @with_block      = nil
+      assign_options(options)
+    end
+</code></pre>
+
+<ul>
+  <li>MethodPattern を保持する</li>
+  <li>uri_pattern も保持する</li>
+  <li>BodyPattern は body 部を見て multipart/form-data は扱わず、json なのか xml なのかなど判定して、よしなに parse されます。</li>
+  <li>HeadersPattern は同じように header に対して行われます。</li>
+</ul>
+
+</section>
+<section>
+
+<pre><code class="language-.rb">  class MethodPattern
+    def initialize(pattern)
+      @pattern = pattern
+    end
+
+    def matches?(method)
+      @pattern == method || @pattern == :any
+    end
+</code></pre>
+<ul>
+  <li>ここで登録された method と、実行されたメソッド名がマッチしているか</li>
+  <li>又は、パターンが :any である場合にはマッチしたと判定する</li>
+</ul>
+
+</section>
+<section>
+
+<p>これで stub_request による登録が完了</p>
+
+<pre><code class="language-.rb">module WebMock
+  module API
+    def stub_request(method, uri)
+      WebMock::StubRegistry.instance.
+        register_request_stub(WebMock::RequestStub.new(method, uri))
+    end
+</code></pre>
+
+</section>
+<section>
+
+<p>次は with について</p>
+
+<pre><code class="language-.rb">stub_request(:post, "https://www.example.com").
+  with(body: "abc", headers: { 'Content-Length' =&gt; 3 }).
+  to_return(body: "abc")
+</code></pre>
+
+<p>register_request_stub は WebMock::RequestStub を返すので、<br>
+WebMock::RequestStub.with を見ます</p>
+
+<pre><code class="language-.rb">module WebMock
+  class StubRegistry
+    def register_request_stub(stub)
+      request_stubs.insert(0, stub)
+      stub
+    end
+</code></pre>
+
+</section>
+<section>
+
+<pre><code class="language-.rb">module WebMock
+  class RequestStub
+    def with(params = {}, &amp;block)
+      @request_pattern.with(params, &amp;block)
+      self
+    end
+</code></pre>
+
+<p>RequestPattern#with で、<br>
+body や headers や uri pattern を保持します。</p>
+
+<pre><code class="language-.rb">module WebMock
+  class RequestPattern
+    def with(options = {}, &amp;block)
+      raise ArgumentError.new('#with method invoked with no arguments. Either options hash or block must be specified.') if options.empty? &amp;&amp; !block_given?
+      assign_options(options)
+      @with_block = block
+      self
+
+    def assign_options(options)
+      options = WebMock::Util::HashKeysStringifier.stringify_keys!(options, deep: true)
+      HashValidator.new(options).validate_keys('body', 'headers', 'query', 'basic_auth')
+      set_basic_auth_as_headers!(options)
+      @body_pattern = BodyPattern.new(options['body']) if options.has_key?('body')
+      @headers_pattern = HeadersPattern.new(options['headers']) if options.has_key?('headers')
+      @uri_pattern.add_query_params(options['query']) if options.has_key?('query')
+</code></pre>
+
+</section>
+<section>
+
+<p>最後に to_return について</p>
+
+<pre><code class="language-.rb">stub_request(:post, "https://www.example.com").
+  with(body: "abc", headers: { 'Content-Length' =&gt; 3 }).
+  to_return(body: "abc")
+</code></pre>
+
+<p>with で self を返すので同様に<br>
+WebMock::RequestPattern#to_return です<br>
+よしなに responses_sequences に保持します</p>
+
+<pre><code class="language-.rb">module WebMock
+  class RequestPattern
+    def to_return(*response_hashes, &amp;block)
+      if block
+        @responses_sequences &lt;&lt; ResponsesSequence.new([ResponseFactory.response_for(block)])
+      else
+        @responses_sequences &lt;&lt; ResponsesSequence.new([*response_hashes].flatten.map {|r| ResponseFactory.response_for(r)})
+      end
+      self
+    end
+    alias_method :and_return, :to_return
+</code></pre>
+
+</section>
+<section>
+
+<h3>登録は出来た。ではどのように実行されるのか</h3>
+
+<p>lib/webmock/http_lib_adapters の中にアダプターがあります<br>
+Net::HTTP での前提で続きを追います</p>
+
+<p>Net::HTTP を @webMockNetHTTP に書き換えています。</p>
+
+<p>lib/webmock/rspec.rb<br>
+<code>require 'webmock/rspec'</code> すると <code>WebMock.enable!</code> されます</p>
+
+<pre><code class="language-.rb">module WebMock
+  module HttpLibAdapters
+    class NetHttpAdapter &lt; HttpLibAdapter
+      adapter_for :net_http
+      def self.enable!
+        Net.send(:remove_const, :BufferedIO)
+        Net.send(:remove_const, :HTTP)
+        Net.send(:remove_const, :HTTPSession)
+        Net.send(:const_set, :HTTP, @webMockNetHTTP)
+        Net.send(:const_set, :HTTPSession, @webMockNetHTTP)
+        Net.send(:const_set, :BufferedIO, Net::WebMockNetBufferedIO)
+      end
+      @webMockNetHTTP = Class.new(Net::HTTP) do
+        def request(request, body = nil, &amp;block)
+          request_signature = WebMock::NetHTTPUtility.request_signature_from_request(self, request, body)
+          # ここで stub RequestPattern にマッチする stub を探して評価して結果を返している
+          if webmock_response = WebMock::StubRegistry.instance.response_for_request(request_signature)
+            build_net_http_response(webmock_response, &amp;block)
+</code></pre>
+
+</section>
+<section>
+
+<h1>railsdm</h1>
+
+<h2>一緒にやっていく方を募集中です</h2>
+<h2>是非やりましょう❤️</h2>
+
+</section>
+
+  </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+  (function() {
+  function extend( a, b ) {
+    for(var i in b) {
+      a[i] = b[i];
+    }
+  }
+  var baseOptions = {
+    transition: 'default',
+
+    dependencies: [
+      { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'plugin/zoom-js/zoom.js', async: true },
+      { src: 'plugin/notes/notes.js', async: true }
+    ]
+  };
+  var configOptions = {"controls":true,"progress":true,"history":true,"center":true}
+  var initializeOptions = {};
+  extend(initializeOptions, baseOptions);
+  extend(initializeOptions, configOptions);
+  Reveal.initialize(initializeOptions);
+})();
+
+</script>
+
+  </body>
+</html>
