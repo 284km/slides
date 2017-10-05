@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <meta charset="utf-8">
+
+<title>Brainf*ck をやってみた</title>
+
+<meta name="description" content="">
+<meta name="author" content="284km">
+<meta name="generator" content="reveal-ck 3.8.0">
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<link rel="stylesheet" href="css/reveal-ck.css">
+
+
+<!-- Printing and PDF exports -->
+<script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+<script src="lib/js/html5shiv.js"></script>
+<![endif]-->
+
+  </head>
+
+  <body>
+    <div class="reveal">
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+
+<h2>Brainf*ck をやってみた</h2>
+<h3>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h3>
+<h5>表参道.rb #27 ~ RubyKaigiのおさらい ~</h5>
+
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+</section>
+<section>
+
+<h1>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h1>
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+<ul>
+  <li>feedforce エンジニア
+    <ul>
+      <li>Ruby/Rails 中心の生活</li>
+      <li>サービスを作る人</li>
+    </ul>
+  </li>
+  <li>Rails Developers Meetup</li>
+</ul>
+
+</section>
+<section>
+
+<h1>RubyKaigi</h1>
+
+<ul>
+  <li>行った方も</li>
+  <li>行けなかった方も</li>
+  <li>おつかれさまでした</li>
+  <li>好きな発表？</li>
+  <li>美味しかった？</li>
+</ul>
+
+</section>
+<section>
+
+<h1>好きな発表？</h1>
+
+</section>
+<section>
+
+<h1>Quine</h1>
+
+</section>
+<section>
+
+<h1>Quine</h1>
+
+<h3>自身のソースコードと完全に同じ文字列を出力するプログラムである。</h3>
+
+</section>
+<section>
+
+<h1>こういうのです</h1>
+
+<p>動かす</p>
+
+</section>
+<section>
+
+<h1>本当は今日 Quine の発表をやりたかった</h1>
+
+</section>
+<section>
+
+<h1>Brainf*ck</h1>
+<h1>Brainfuck</h1>
+
+</section>
+<section>
+
+<h1>Brainf*ck</h1>
+
+<ul>
+  <li>もう飽きてる方もいるかも</li>
+  <li>僕は初めて実装しました</li>
+</ul>
+
+</section>
+<section>
+
+<h1>Brainf*ck</h1>
+
+<ul>
+  <li><a href="https://ja.wikipedia.org/wiki/Brainfuck">Brainfuck - Wikipedia</a></li>
+</ul>
+
+<p>Brainfuck（ブレインファック）は難解プログラミング言語のひとつ。なお名称に卑語が含まれるため、Brainf*ckなどと表記されることがある。</p>
+
+</section>
+<section>
+
+<h1>概要</h1>
+
+<p>開発者Urban Müllerがコンパイラがなるべく小さくなる言語として考案した。 実際、Müllerが開発したコンパイラのサイズはわずか123バイト、インタプリタは98バイトであった。</p>
+
+<p>Brainfuckプログラムは非常に可読性・記述性が低いため実用性は期待できないが、チューリング完全である。その簡潔さから多くの派生言語を生み出すこととなった。</p>
+
+</section>
+<section>
+
+<h2>Brainfuckの言語仕様</h2>
+
+<p>処理系は次の要素から成る: Brainfuckプログラム、インストラクションポインタ（プログラム中のある文字を指す）、少なくとも30000個の要素を持つバイトの配列（各要素はゼロで初期化される）、データポインタ（前述の配列のどれかの要素を指す。最も左の要素を指すよう初期化される）、入力と出力の2つのバイトストリーム。</p>
+
+<p>Brainfuckプログラムは、以下の8個の実行可能な命令から成る（他の文字は無視され、読み飛ばされる）。</p>
+
+</section>
+<section>
+
+<h2>Brainfuckの言語仕様</h2>
+
+<pre><code>&gt;  ポインタをインクリメントする。C言語の「ptr++;」に相当する
+&lt;  ポインタをデクリメントする。「ptr--;」に相当
++  ポインタが指す値をインクリメントする。「(*ptr)++;」に相当
+-  ポインタが指す値をデクリメントする。「(*ptr)--;」に相当
+.  ポインタが指す値を出力に書き出す。「putchar(*ptr);」に相当
+,  入力から1バイト読み込んで、ポインタが指す先に代入する。「*ptr=getchar();」に相当
+[  ポインタが指す値が0なら、対応する ] の直後にジャンプする。「while(*ptr){」に相当
+]  ポインタが指す値が0でないなら、対応する [ の直後にジャンプする。「}」に相当
+</code></pre>
+
+</section>
+<section>
+
+<h1>Installation</h1>
+
+<pre><code>$ brew install brainfuck
+</code></pre>
+
+<pre><code>$ sudo apt-get install bf
+</code></pre>
+
+</section>
+<section>
+
+<h1>print foo</h1>
+
+<h3>お手元の ASCII コード表 を見ながら書くとよさそう</h3>
+
+<pre><code>++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++.          0x66: f
++++++++++.       0x6f: o
+.                0x6f: o
+</code></pre>
+
+</section>
+<section>
+
+<h1>Hello, World!</h1>
+
+<p>ループを使って短く書いている (解説する)</p>
+
+<p>[9]<br>
+[0][8*9][11*9][5*9]</p>
+<pre><code>+++++++++[&gt;++++++++&gt;+++++++++++&gt;+++++&lt;&lt;&lt;-]&gt;.&gt;++.+++++++..+++.&gt;-.
+------------.&lt;++++++++.--------.+++.------.--------.&gt;+.
+</code></pre>
+
+</section>
+<section>
+
+<h1>オレオレ実装</h1>
+
+<ul>
+  <li><a href="https://github.com/284km/brain_kemofure">284km/brain_kemofure</a></li>
+  <li>わりと簡単に作れる</li>
+  <li>すでにもうたくさんの実装が世の中に溢れている
+    <ul>
+      <li><a href="http://d.hatena.ne.jp/toyoshi/20100208/1265587511">brainf*ckでジョジョ言語 - 旧toyoshiの日記</a></li>
+    </ul>
+  </li>
+  <li>やったことなかったので、とりあえず作ってみた</li>
+</ul>
+
+</section>
+<section>
+
+<h3>Input</h3>
+
+<p>わーい！わーい！すごーい！わーい！たーのしー！すごーい！わーい！わーい！たーのしー！食べないでくださいあなたは何のフレンズさんですか？わーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！あなたは何のフレンズさんですか？わーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！あなたは何のフレンズさんですか？わーい！わーい！わーい！わーい！わーい！われわれはかしこいのでわれわれはかしこいのでわれわれはかしこいのでまたやってしまったねぇ食べないよあなたは何のフレンズさんですか？やりますねあなたは何のフレンズさんですか？わーい！わーい！やりますねわーい！わーい！わーい！わーい！わーい！わーい！わーい！やりますねやりますねわーい！わーい！わーい！やりますねあなたは何のフレンズさんですか？またやってしまったねぇやりますねまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇやりますねわれわれはかしこいのでわーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！やりますねまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇやりますねわーい！わーい！わーい！やりますねまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇやりますねまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇやりますねあなたは何のフレンズさんですか？わーい！やりますね</p>
+
+</section>
+<section>
+
+<h2>=&gt; Hello, World!</h2>
+
+<pre><code>while index &lt; @tokens.size
+  case @tokens[index]
+    when 'わーい', 'すごーい', 'たーのしー'
+      array[now] ||= 0
+      array[now] += 1
+    when 'またやってしまったねぇ'
+      array[now] ||= 0
+      array[now] -= 1
+    when 'あなたは何のフレンズさんですか？'
+      now += 1
+    when 'われわれはかしこいので'
+      now -= 1
+    when 'やりますね'
+      n = (array[now] || 0)
+      print n.chr
+    when ','
+      array[now] = $stdin.getc
+    when '食べないでください'
+      index = @jumps[index] if array[now] == 0
+    when '食べないよ'
+      index = @jumps[index] if array[now] != 0
+  end
+  index += 1
+end
+</code></pre>
+
+</section>
+
+  </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+
+<script>
+  (function() {
+  function extend( a, b ) {
+    for(var i in b) {
+      a[i] = b[i];
+    }
+  }
+  var baseOptions = {
+    transition: 'default',
+
+    dependencies: [
+      { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'plugin/zoom-js/zoom.js', async: true },
+      { src: 'plugin/notes/notes.js', async: true }
+    ]
+  };
+
+  
+
+  var configOptions = {"controls":true,"progress":true,"history":true,"center":true}
+  var initializeOptions = {};
+  extend(initializeOptions, baseOptions);
+  extend(initializeOptions, configOptions);
+  Reveal.initialize(initializeOptions);
+})();
+
+</script>
+
+  </body>
+</html>
