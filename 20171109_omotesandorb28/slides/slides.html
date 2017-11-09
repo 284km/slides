@@ -1,0 +1,159 @@
+<section>
+
+<h2>Brainf*ck 亜種言語生成ライブラリ (gen_brain) を gem release します</h2>
+<h3>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h3>
+<h5>表参道.rb #28 ~gem~</h5>
+
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+</section>
+<section>
+
+<h2>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h2>
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+<ul>
+  <li>feedforce エンジニア</li>
+  <li>Rails Developers Meetup</li>
+</ul>
+
+</section>
+<section>
+
+<h3>gem について 今日話すこと</h3>
+
+<ul>
+  <li><del>「オススメのgemの紹介」</del></li>
+  <li><del>「gemを使って失敗した事例」</del></li>
+  <li>「gemの作り方」</li>
+  <li>なお <strong>非実用的な</strong> gem です</li>
+</ul>
+
+</section>
+<section>
+
+<h2>Brainf*ck</h2>
+<h2>Brainfuck</h2>
+
+<ul>
+  <li>前回実装をした
+    <ul>
+      <li>表参道.rb #27 ~ RubyKaigiのおさらい ~</li>
+      <li><a href="https://omotesandorb.connpass.com/event/67911/">https://284km.github.io/slides/20171005_omotesandorb27/slides/#/</a></li>
+      <li>284km/brain_kemofure</li>
+    </ul>
+  </li>
+  <li>今回書いたのは、それを汎用化した gem</li>
+</ul>
+
+</section>
+<section>
+
+<h3>Input (brainfuck のコード)</h3>
+
+<pre><code>+++++++++[&gt;++++++++&gt;+++++++++++&gt;+++++&lt;&lt;&lt;-]&gt;.&gt;++.+++++++..+++.&gt;-.
+------------.&lt;++++++++.--------.+++.------.--------.&gt;+.
+</code></pre>
+
+</section>
+<section>
+
+<h3>Output</h3>
+
+<p>Hello, World!</p>
+
+</section>
+<section>
+
+<h3>Input (前回実装した brain_kemofure のコード)</h3>
+
+<p>わーい！わーい！すごーい！わーい！たーのしー！すごーい！わーい！わーい！たーのしー！食べないでくださいあなたは何のフレンズさんですか？わーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！あなたは何のフレンズさんですか？わーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！あなたは何のフレンズさんですか？わーい！わーい！わーい！わーい！わーい！われわれはかしこいのでわれわれはかしこいのでわれわれはかしこいのでまたやってしまったねぇ食べないよあなたは何のフレンズさんですか？やりますねあなたは何のフレンズさんですか？わーい！わーい！やりますねわーい！わーい！わーい！わーい！わーい！わーい！わーい！やりますねやりますねわーい！わーい！わーい！やりますねあなたは何のフレンズさんですか？またやってしまったねぇやりますねまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇやりますねわれわれはかしこいのでわーい！わーい！わーい！わーい！わーい！わーい！わーい！わーい！やりますねまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇやりますねわーい！わーい！わーい！やりますねまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇやりますねまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇまたやってしまったねぇやりますねあなたは何のフレンズさんですか？わーい！やりますね</p>
+
+</section>
+<section>
+
+<h3>Output</h3>
+
+<p>Hello, World!</p>
+
+</section>
+<section>
+
+<h3>gem を作る</h3>
+
+<ul>
+  <li>bundle gem (雛形を作る)</li>
+  <li>.gemspec ファイルを編集する</li>
+  <li>実装したり、README を更新したり</li>
+  <li>rake install:local (network access 無しで gem を install)</li>
+  <li>rake release (tag 付けて build して Rubygems へ push する)</li>
+</ul>
+
+</section>
+<section>
+
+<h3>雛形を作る</h3>
+
+<pre><code>bundle gem -b gen_brain -t
+</code></pre>
+
+<ul>
+  <li>-b
+    <ul>
+      <li>作成するライブラリのためのバイナリを生成する</li>
+    </ul>
+  </li>
+  <li>-t
+    <ul>
+      <li>作成するライブラリのためのテスト用のディレクトリを生成する</li>
+      <li>default: rspec ですが、minitest もサポートしている</li>
+    </ul>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h3>これらは端折ります</h3>
+
+<ul>
+  <li>.gemspec ファイルを編集する</li>
+  <li>実装したり、README を更新したり</li>
+  <li>rake install:local (network access 無しで gem を install)</li>
+</ul>
+
+</section>
+<section>
+
+<h3>gen_brain がやること</h3>
+
+<ul>
+  <li>brainfuck 亜種言語の生成</li>
+  <li>Hello, World! と出力する生成した brainfuck 亜種言語のコード</li>
+</ul>
+
+</section>
+<section>
+
+<h3>gem release します</h3>
+
+</section>
+<section>
+
+<h3>284km/gen_brain</h3>
+
+<pre><code>Usage:
+gen_brain config.yml
+</code></pre>
+
+<p>設定ファイルを 284/gen_brain に3つほど用意してみた</p>
+
+<ul>
+  <li>config.yml (普通の brainfuck)</li>
+  <li>config_kemofure.config (ケモフレ言語)</li>
+  <li>config_street_fighter2.config (スト2言語)</li>
+</ul>
+
+</section>
