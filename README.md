@@ -1,4 +1,5 @@
 
+https://284km.github.io/slides/20171109_omotesandorb28/slides/
 https://284km.github.io/slides/20171024_shinjukurb54/slides/
 https://284km.github.io/slides/20171005_omotesandorb27/slides/
 https://284km.github.io/slides/20170907_omotesandorb26/slides/
