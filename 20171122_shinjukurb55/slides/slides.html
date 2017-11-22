@@ -1,0 +1,344 @@
+<section>
+
+<h2>とある Ruby の私秘鏡裏</h2>
+<h3>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h3>
+<h5>Shinjuku.rb #55 Ruby “outside” Rails</h5>
+
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+</section>
+<section>
+
+<h2>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h2>
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+<ul>
+  <li>feedforce エンジニア</li>
+  <li>Rails Developers Meetup</li>
+</ul>
+
+</section>
+<section>
+
+<h1>Ruby “outside” Rails</h1>
+
+</section>
+<section>
+
+<h1>仕事</h1>
+
+<p>Rails エンジニア。なのだと思う。</p>
+
+</section>
+<section>
+
+<h1>#railsdm</h1>
+
+<p>やっている</p>
+
+</section>
+<section>
+
+<h2>プライベート</h2>
+
+<p>あまり Rails じゃない ＼(^o^)／</p>
+
+</section>
+<section>
+
+<h2>“outside” Rails とは…。</h2>
+
+<ul>
+  <li>Hanami ?</li>
+  <li>sinatra ?</li>
+  <li>padrino ?</li>
+</ul>
+
+</section>
+<section>
+
+<h2>(´ε｀；)ｳｰﾝ…</h2>
+<h2>“outside”</h2>
+
+</section>
+<section>
+
+<h2>趣味プログラミング</h2>
+
+</section>
+<section>
+
+<h3>最近の発表</h3>
+
+<p>(全部趣味。Rails じゃないですね)</p>
+
+<ul>
+  <li><a href="https://284km.github.io/slides/20171005_omotesandorb27/slides/#/">Brainf*ck をやってみた (omotesandorb27)</a></li>
+  <li><a href="https://284km.github.io/slides/20171024_shinjukurb54/slides/#/">おもに bison, flex での実装の説明 (shinjukurb54)</a></li>
+  <li><a href="https://284km.github.io/slides/20171109_omotesandorb28/slides/#/">Brainf*ck 亜種言語生成ライブラリ (gen_brain) を gem release します (omotesandorb28)</a></li>
+  <li><a href="https://284km.github.io/slides/20171115_shibuyarb/slides/#/">Rubyで綾波Quine (shibuyarb)</a></li>
+</ul>
+
+</section>
+<section>
+
+<h3>最近書いていて楽しいと思うもの</h3>
+
+<ul>
+  <li>コードゴルフ</li>
+  <li>難解プログラミング</li>
+  <li>次はライフゲーム実装とかやろうかな</li>
+</ul>
+
+</section>
+<section>
+
+<h2>楽しいので紹介したい</h2>
+
+<p>よく使うもの</p>
+
+<p>こちらが詳しいです</p>
+<ul>
+  <li><a href="https://qiita.com/tbpgr/items/775636617d58bed56657">Ruby Code Golf Technic - Qiita</a></li>
+</ul>
+
+<p>見ていきましょう</p>
+
+</section>
+<section>
+
+<h3>不要な() や space</h3>
+
+<pre><code class="language-ruby">puts("hi")
+puts "hi"
+
+#=&gt;
+puts"hi"
+</code></pre>
+
+</section>
+<section>
+
+<h3>$&gt;«</h3>
+
+<p>print よりも 1 文字短い</p>
+
+<pre><code>print"hoge" # =&gt; hoge
+$&gt;&lt;&lt;"hoge" # =&gt; hoge
+</code></pre>
+
+</section>
+<section>
+
+<h3>putc</h3>
+
+<p>文字コードがわかっている状態での標準出力が必要な場合に有効</p>
+
+<pre><code>$&gt;&lt;&lt;65.chr # =&gt; A
+putc 65 # =&gt; A
+</code></pre>
+
+</section>
+<section>
+
+<h3>?</h3>
+
+<p>1 文字出力したい時に有効</p>
+
+<pre><code>puts 'X'
+
+puts ?X
+</code></pre>
+
+</section>
+<section>
+
+<h3>String#[]</h3>
+
+<pre><code>puts 'hoge'.split('')[1] # =&gt; o
+puts 'hoge'.chars[1] # =&gt; o
+puts 'hoge'[1] # =&gt; o
+
+puts 'hoge'.chars[1..-1]*'' # =&gt; oge
+puts 'hoge'[1..-1] # =&gt; oge
+</code></pre>
+
+</section>
+<section>
+
+<h3>グローバル変数,クラス変数,インスタンス変数の文字列展開</h3>
+
+<pre><code># {} を省略可
+
+class Hoge
+  def hoge
+    @a=1 # =&gt; インスタンス変数
+    @@b=2 # =&gt; クラス変数
+    $c=3 # =&gt; グローバル変数
+    d=4 # =&gt; 変数（通常の変数は省略できない）
+    puts "#@a,#@@b,#$c,#d"
+  end
+end
+
+Hoge.new.hoge
+# =&gt; 1,2,3,#d
+</code></pre>
+
+</section>
+<section>
+
+<h3>Array#*</h3>
+
+<pre><code>puts [*1..5].join(':') # =&gt; 1:2:3:4:5
+puts [*1..5]*':' # =&gt; 1:2:3:4:5
+</code></pre>
+
+</section>
+<section>
+
+<h3>文字列の置換</h3>
+
+<p>sub! による置換を [regexp]= による置換で短くする</p>
+
+<pre><code>str = "0123456789"
+str.sub! /[2-4]/,'@'
+puts str # =&gt; 01@3456789
+
+str = "0123456789"
+str[/[2-4]/]='@'
+puts str # =&gt; 01@3456789
+</code></pre>
+
+</section>
+<section>
+
+<ul>
+  <li><a href="https://www.slideshare.net/mametter/ruby-2012">Ruby を用いた超絶技巧プログラミング（夏のプログラミングシンポジウム 2012）</a></li>
+</ul>
+
+</section>
+<section>
+
+<h3>第一段階:アルファベットと数字で Ruby</h3>
+
+<p>コード文字列 “p 1” を構築, eval するコード</p>
+
+<pre><code>class String
+  def each
+    concat 112 #=&gt; p
+    concat 32  #=&gt; space
+    concat 49  #=&gt; 1
+    eval self
+    exit
+  end
+end
+for i in
+  String nil do
+end
+</code></pre>
+
+</section>
+<section>
+
+<h3>第二段階: 大文字を排除する</h3>
+
+<pre><code># String クラスには定義できない
+# トップレベルは Object クラス
+# トップレベルに定義すれば良い
+public
+def each
+  clear
+  concat 112 #=&gt; p
+  concat 32  #=&gt; space
+  concat 49  #=&gt; 1
+  eval self
+  exit
+end
+for i in
+  # 文字列を返す別のメソッドにする
+  # String#clear で空文字列に
+  inspect do
+end
+</code></pre>
+
+</section>
+<section>
+
+<h3>数字を排除する(1)</h3>
+
+<pre><code>欲しい数字の長さの文字列を作り size を呼ぶ
+e.g. 8 を生成するコード
+clear
+concat size
+concat self
+concat self
+concat self
+size
+つまり、
+[26] pry(main)&gt; a = a.clear
+=&gt; ""
+[27] pry(main)&gt; a.size
+=&gt; 0
+[28] pry(main)&gt; a.concat a.size
+=&gt; "\u0000"
+[29] pry(main)&gt; a
+=&gt; "\u0000"
+[30] pry(main)&gt; a.concat a
+=&gt; "\u0000\u0000"
+[31] pry(main)&gt; a.concat a
+=&gt; "\u0000\u0000\u0000\u0000"
+2^3 = 8 が得られる
+</code></pre>
+
+</section>
+<section>
+
+<h3>数字を排除する(2)</h3>
+
+<pre><code>例外処理の構文 を使う
+begin A ensure B end
+- A を評価し
+- B を評価し
+- B の評価結果を捨てて、A の評価結果を返す構文
+
+つまり、文字列の先頭に1文字追加するイディオムが作れる
+
+#=&gt;
+現在のself
+"..."
+concat begin
+  dup
+ensure
+  concat begin
+    65 を作る
+  ensure
+    clear
+  end
+end
+新しいself
+"A..."
+つまり、
+[38] pry(main)&gt; a
+=&gt; "aaa"
+[39] pry(main)&gt; a.concat begin
+[39] pry(main)*   a.dup
+[39] pry(main)* ensure
+[39] pry(main)*   a.concat begin
+[39] pry(main)*     "A"
+[39] pry(main)*   ensure
+[39] pry(main)*     a.clear
+[39] pry(main)*   end
+[39] pry(main)* end
+=&gt; "Aaaa"
+</code></pre>
+
+</section>
+<section>
+
+<h3>おしまい</h3>
+
+<p>outside 楽しい</p>
+
+</section>
