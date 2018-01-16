@@ -1,4 +1,14 @@
 
+### 2018
+
+https://284km.github.io/slides/20180111_omotesandorb30/slides/
+
+### 2017
+
+https://284km.github.io/slides/20171209_railsdm2017/slides/
+https://284km.github.io/slides/20171208_fftt2/slides/
+https://284km.github.io/slides/20171207_omotesandorb29/slides/
+https://284km.github.io/slides/20171122_shinjukurb55/slides/
 https://284km.github.io/slides/20171115_shibuyarb/slides/
 https://284km.github.io/slides/20171109_omotesandorb28/slides/
 https://284km.github.io/slides/20171024_shinjukurb54/slides/
