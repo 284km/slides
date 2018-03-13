@@ -5,6 +5,8 @@ https://284km.github.io/slides/20180111_omotesandorb30/slides/
 
 ### 2017
 
+https://speakerdeck.com/284km/fast-code-for-ruby
+https://284km.github.io/slides/20180111_omotesandorb30/slides/
 https://284km.github.io/slides/20171209_railsdm2017/slides/
 https://284km.github.io/slides/20171208_fftt2/slides/
 https://284km.github.io/slides/20171207_omotesandorb29/slides/
