@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <meta charset="utf-8">
+
+<title>Which is faster?</title>
+
+<meta name="description" content="">
+<meta name="author" content="284km">
+<meta name="generator" content="reveal-ck 3.8.0">
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<link rel="stylesheet" href="css/reveal-ck.css">
+
+
+<!-- Printing and PDF exports -->
+<script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+<script src="lib/js/html5shiv.js"></script>
+<![endif]-->
+
+  </head>
+
+  <body>
+    <div class="reveal">
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+
+<h2>Life Is Strange</h2>
+<h3>秒速<a href="https://github.com/284km" class="user-mention">@284km</a>
+</h3>
+<h5>表参道.rb #35</h5>
+
+<p><img src="../goku.jpg" alt="goku.jpg"></p>
+
+</section>
+<section>
+
+<h1>こんにちは</h1>
+
+</section>
+<section>
+
+<h1>仙台以来ですね？</h1>
+
+</section>
+<section>
+
+<h1>疲れてますか？</h1>
+
+</section>
+<section>
+
+<h1>日記はもう書きました？</h1>
+
+<p><img src="../nikki.png" alt="nikki.png"></p>
+
+</section>
+<section>
+
+<h2>表参道.rb #30 以来の発表のようです</h2>
+
+<p>やっと落ち着きつつあります</p>
+
+<ul>
+  <li>沖縄Ruby会議</li>
+  <li>railsdm 2018</li>
+  <li>技術書展4</li>
+  <li>RejectKaigi 2018</li>
+  <li>RubyKaigi 2018 LT</li>
+</ul>
+
+</section>
+<section>
+
+<h1>#kaigieffect</h1>
+
+<ul>
+  <li><a href="https://togetter.com/li/162817">#kaigieffect ー RubyKaigi効果 - Togetter</a></li>
+</ul>
+
+</section>
+<section>
+
+<h1>#kaigieffect</h1>
+
+<ul>
+  <li>思い出を語るに留まらず、何か新しいことをという気持ち</li>
+  <li>僕も今日、小さいけどひとつ</li>
+</ul>
+
+</section>
+<section>
+
+<h2>ライフゲーム (Conway’s Game of Life)</h2>
+
+<p><a href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0">https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0</a></p>
+
+<ul>
+  <li>書いてみたいと以前から言っていて、まだ書いたことがなかった</li>
+  <li>RubyKaigi で何回か登場してましたよね</li>
+  <li>よっしゃ機運だ</li>
+</ul>
+
+</section>
+<section>
+
+<h2>ライフゲーム (Conway’s Game of Life)</h2>
+
+<pre><code>- 誕生
+    - 死んでいるセルに隣接する生きたセルがちょうど3つあれば、次の世代が誕生する。
+- 生存
+    - 生きているセルに隣接する生きたセルが2つか3つならば、次の世代でも生存する。
+- 過疎
+    - 生きているセルに隣接する生きたセルが1つ以下ならば、過疎により死滅する。
+- 過密
+    - 生きているセルに隣接する生きたセルが4つ以上ならば、過密により死滅する。
+</code></pre>
+
+</section>
+<section>
+
+<h2>つまり</h2>
+
+<p>ルールは単純だ</p>
+
+<ul>
+  <li>生きてるセル
+    <ul>
+      <li>隣接する生きたセルが 2 つか 3つなら生き続ける</li>
+    </ul>
+  </li>
+  <li>死んでるセル
+    <ul>
+      <li>隣接する生きたセルが 3 つなら生き</li>
+    </ul>
+  </li>
+</ul>
+
+</section>
+<section>
+
+<h2>実装は世にたくさんある</h2>
+
+<ul>
+  <li><a href="https://www.twitch.tv/videos/251736888">jonan (デカ外人) のライブコーディング - RailsConf 2018 - Twitch</a></li>
+  <li><a href="http://blog.youchan.org/2018-05-03">@youhan のブログより - One-Liner Game of Life</a></li>
+  <li>and so on …</li>
+</ul>
+
+<p>RubyKaigi 2018 でも、何度かライフゲームが現れましたよね。</p>
+
+</section>
+<section>
+
+<h2>そういうわけで書いてみた</h2>
+
+<p>284km/cgol</p>
+
+<ul>
+  <li>ちょっとだけ jonan の動画とかは見たことがあった</li>
+  <li>field とか cell とかこんな感じで実装できそうだなとは頭にあった</li>
+</ul>
+
+</section>
+<section>
+
+<h2>284km/cgol</h2>
+
+<ul>
+  <li>書いてみたけど、そんなにここから何か言いたいことがなかった…w</li>
+  <li>でも、書いていておもしろかったからいいか。</li>
+</ul>
+
+<p>今日は、書いたコードが動くところを見せびらかして終わりです。ではいきますよ！</p>
+
+</section>
+
+  </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+
+<script>
+  (function() {
+  function extend( a, b ) {
+    for(var i in b) {
+      a[i] = b[i];
+    }
+  }
+  var baseOptions = {
+    transition: 'default',
+
+    dependencies: [
+      { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'plugin/zoom-js/zoom.js', async: true },
+      { src: 'plugin/notes/notes.js', async: true }
+    ]
+  };
+
+  
+
+  var configOptions = {"controls":true,"progress":true,"history":true,"center":true}
+  var initializeOptions = {};
+  extend(initializeOptions, baseOptions);
+  extend(initializeOptions, configOptions);
+  Reveal.initialize(initializeOptions);
+})();
+
+</script>
+
+  </body>
+</html>
