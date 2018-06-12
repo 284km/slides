@@ -1,6 +1,7 @@
 
 ### 2018
 
+- https://speakerdeck.com/284km/csv-compatible-csv-library
 - https://speakerdeck.com/284km/super-fast-csv-parser
 - https://speakerdeck.com/284km/fftt-20180427
 - https://speakerdeck.com/284km/-2
